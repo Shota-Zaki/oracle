@@ -1,0 +1,193 @@
+(node:1168) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+# Entry syntax transform: 8 sources; not a dependency/type check
+TAP version 13
+# Subtest: literal loopback accepted without DNS
+ok 1 - literal loopback accepted without DNS
+  ---
+  duration_ms: 1.180816
+  type: 'test'
+  ...
+# Subtest: wildcard, LAN, hostnames, malformed literals rejected
+ok 2 - wildcard, LAN, hostnames, malformed literals rejected
+  ---
+  duration_ms: 3.86223
+  type: 'test'
+  ...
+# Subtest: CDP URL has literal loopback and no credential channels
+ok 3 - CDP URL has literal loopback and no credential channels
+  ---
+  duration_ms: 0.257788
+  type: 'test'
+  ...
+# Subtest: capacities reject nonintegers, infinity and excess
+ok 4 - capacities reject nonintegers, infinity and excess
+  ---
+  duration_ms: 0.21287
+  type: 'test'
+  ...
+# Subtest: diagnostic token redaction does not modify identifiers
+ok 5 - diagnostic token redaction does not modify identifiers
+  ---
+  duration_ms: 0.680394
+  type: 'test'
+  ...
+# Subtest: nested cookie/config diagnostics redacted without mutation
+ok 6 - nested cookie/config diagnostics redacted without mutation
+  ---
+  duration_ms: 0.39176
+  type: 'test'
+  ...
+# Subtest: sensitive file names and directories are rejected
+ok 7 - sensitive file names and directories are rejected
+  ---
+  duration_ms: 0.702327
+  type: 'test'
+  ...
+# Subtest: prefix collision and traversal do not escape allowed root
+ok 8 - prefix collision and traversal do not escape allowed root
+  ---
+  duration_ms: 0.217327
+  type: 'test'
+  ...
+# Subtest: runtime-generated secret candidates detected without disclosing values
+ok 9 - runtime-generated secret candidates detected without disclosing values
+  ---
+  duration_ms: 0.941035
+  type: 'test'
+  ...
+# Subtest: admitted file reads bounded safe text
+ok 10 - admitted file reads bounded safe text
+  ---
+  duration_ms: 14.165791
+  type: 'test'
+  ...
+# Subtest: symlink files, directory symlinks and hard links fail closed
+ok 11 - symlink files, directory symlinks and hard links fail closed
+  ---
+  duration_ms: 3.395197
+  type: 'test'
+  ...
+# Subtest: oversized input and aggregate bounds rejected
+ok 12 - oversized input and aggregate bounds rejected
+  ---
+  duration_ms: 7.207253
+  type: 'test'
+  ...
+# Subtest: private storage mode and atomic cleanup
+ok 13 - private storage mode and atomic cleanup
+  ---
+  duration_ms: 5.554216
+  type: 'test'
+  ...
+# Subtest: storage refuses symlink directories and public files
+ok 14 - storage refuses symlink directories and public files
+  ---
+  duration_ms: 2.064445
+  type: 'test'
+  ...
+# Subtest: 11 parallel reservations for one request create exactly one owner
+ok 15 - 11 parallel reservations for one request create exactly one owner
+  ---
+  duration_ms: 11.588804
+  type: 'test'
+  ...
+# Subtest: session binding survives a fresh reader and rejects reassignment
+ok 16 - session binding survives a fresh reader and rejects reassignment
+  ---
+  duration_ms: 8.287748
+  type: 'test'
+  ...
+# Subtest: crash window after mkdir is recovery-required, never a new reservation
+ok 17 - crash window after mkdir is recovery-required, never a new reservation
+  ---
+  duration_ms: 3.212263
+  type: 'test'
+  ...
+# Subtest: cross-process reservation remains unique
+ok 18 - cross-process reservation remains unique
+  ---
+  duration_ms: 43.613479
+  type: 'test'
+  ...
+# Subtest: coordinator persists session ID before dispatch and duplicate requests reuse it
+ok 19 - coordinator persists session ID before dispatch and duplicate requests reuse it
+  ---
+  duration_ms: 9.804009
+  type: 'test'
+  ...
+# Subtest: new coordinator after restart never resends an existing request
+ok 20 - new coordinator after restart never resends an existing request
+  ---
+  duration_ms: 4.975174
+  type: 'test'
+  ...
+# Subtest: coordinator failure is recorded once, without retry
+ok 21 - coordinator failure is recorded once, without retry
+  ---
+  duration_ms: 4.657387
+  type: 'test'
+  ...
+# Subtest: original RunSlots enforces 3 active and 8 waiting, rejects overflow
+ok 22 - original RunSlots enforces 3 active and 8 waiting, rejects overflow
+  ---
+  duration_ms: 0.783939
+  type: 'test'
+  ...
+# Subtest: RunSlots abort removes waiting work and release is idempotent
+ok 23 - RunSlots abort removes waiting work and release is idempotent
+  ---
+  duration_ms: 0.185028
+  type: 'test'
+  ...
+# Subtest: token file uses private bounded input and never prints contents
+ok 24 - token file uses private bounded input and never prints contents
+  ---
+  duration_ms: 1.942222
+  type: 'test'
+  ...
+# Subtest: token input rejects symlink, hardlink, oversized and whitespace
+ok 25 - token input rejects symlink, hardlink, oversized and whitespace
+  ---
+  duration_ms: 1.696472
+  type: 'test'
+  ...
+# Subtest: capacity report skips external symlinks and enforces traversal budget
+ok 26 - capacity report skips external symlinks and enforces traversal budget
+  ---
+  duration_ms: 3.185843
+  type: 'test'
+  ...
+# Subtest: retention never makes unfinished, pinned, malformed or future records deletion candidates
+ok 27 - retention never makes unfinished, pinned, malformed or future records deletion candidates
+  ---
+  duration_ms: 0.265229
+  type: 'test'
+  ...
+# Subtest: retention report is read-only, handles corrupt metadata and does not expose prompts
+ok 28 - retention report is read-only, handles corrupt metadata and does not expose prompts
+  ---
+  duration_ms: 9.688856
+  type: 'test'
+  ...
+# Subtest: Japanese copy preserves flags and session IDs while hiding token banners
+ok 29 - Japanese copy preserves flags and session IDs while hiding token banners
+  ---
+  duration_ms: 0.208353
+  type: 'test'
+  ...
+# Subtest: coordinator locally bounds outstanding work at eleven across await points
+ok 30 - coordinator locally bounds outstanding work at eleven across await points
+  ---
+  duration_ms: 15.633399
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 229.010291

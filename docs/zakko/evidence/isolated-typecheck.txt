@@ -1,0 +1,6 @@
+Runtime: Node v22.16.0
+Compiler: Version 5.8.3
+Scope: eight dependency-free src/zakko modules (excluding mcp.ts)
+Command: tsc --noEmit --strict --target es2022 --module nodenext --moduleResolution nodenext --skipLibCheck --types node --typeRoots <installed-node-types> <eight-modules>
+Exit: 0
+Not the package.json toolchain. Not the full repository typecheck.
