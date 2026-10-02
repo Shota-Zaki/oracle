@@ -16,6 +16,8 @@ The runner transforms source into a task-owned temporary directory, runs local c
 
 Original oracle checkout has no node_modules; pnpm is not on PATH. Canonical packageManager requires pnpm11.27.0 and pnpm-lock.yaml fixed install. No pnpm/dependency installation authorized or attempted. Full typecheck/lint/format/Vitest/build/packedCLI/MCP SDK stdio gates are not run. Do not substitute another repository's dependencies or reduce pinned versions. No full ORA-009 AC accepted; task remains Ready.
 
+Read-only fallback/cache inspection found bundled pnpm11.19.0, not11.27.0. Both available v11 store indexes were copied into task-owned temporary files for inspection and those copies removed; original stores were not modified. Their package metadata contains Vitest3.2.7 and TypeScript5.9.3, whereas this lock requires5.0.1 and7.0.2. No OpenAI/oxfmt/oxlint package records were present in these inspected indexes. The exact locked dependency environment cannot be assembled from these inspected caches. No fallback pnpm command was executed inside the project, avoiding automatic package-manager acquisition.
+
 Source inspection/reference metadata does not confirm current upstream rules synchronization; requested ORACLE_EXECUTION_STANDARD is absent from local development-rules checkout. Existing canonical AGENTS/accepted design remain the scope for these dependency-free tests; no rule update attempted.
 
 Next prerequisite is an explicitly approved preinstalled/isolated exact dependency environment or approved frozen-lockfile dependency setup. Browser/provider/manual acceptance remains separate. Current test results do not establish24-hour readiness and permanent Mac service setup is unsuitable while Mac return is planned.
