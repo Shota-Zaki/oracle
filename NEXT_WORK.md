@@ -19,3 +19,7 @@ completed以外を保持するpruneを実装し、参照artifactとintent tombst
 user-facing / protocol / DOM / test固定文字列を分類し、残るCLI/TUI/status/setup/errorをcopy layerへ移す。DOM label、flag、ID、schema、回答本文は維持する。翻訳前後の動作と日本語helpの全optionをsnapshotする。
 
 全体検証後にMANUAL_ACCEPTANCE.mdへ進み、実機未確認は未確認のまま残す。変更はworkへ通常pushし、remote SHAと主要fileをreadbackする。
+
+## WU-01 checkpoint - 2026-10-02
+
+Dependency-free source/runtime checks passed on plain Node24.21.0 at4f69a8dd. See docs/zakko/VALIDATION_NATIVE_NODE24_2026-10-02.md. Node24 is available; remaining full-gate prerequisite is exact pnpm11.27.0/locked dependencies (no install authorized). Acquire approved dependency environment before typecheck/lint/format/Vitest/build/packed/MCP. Do not rerun provider/live tests or use shared browser profiles as a substitute.

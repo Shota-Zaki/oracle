@@ -22,3 +22,7 @@
 ## Current Validation
 
 全体完成判定: 未達。Mac用運用開始・main公開の受入条件は満たしていない。指定依存のbuild/test未実行と、実装残件を、実機確認だけに置き換えない。
+
+## ORA-009 verification checkpoint - 2026-10-02
+
+At fixed source4f69a8dd9ed59f58ed42d73094d8681cfd5234a7, existing dependency-free tests passed30/30 with plain Node24.21.0 and8 entry syntax transforms. Full dependency/typecheck/lint/Vitest/build/packed/MCP gate remains unexecuted; ORA-009 stays Ready, no full AC accepted. Exact toolchain prerequisite and limits: docs/zakko/VALIDATION_NATIVE_NODE24_2026-10-02.md.
