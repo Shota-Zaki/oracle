@@ -16,7 +16,7 @@ try {
     const source = await fs.readFile(path.join(root, file), 'utf8');
     await fs.writeFile(target, stripTypeScriptTypes(source, { mode: 'transform' }));
   }
-  const result = spawnSync(process.execPath, ['--test', path.join(root, 'tests/zakko/sessionLifecycle.test.mjs')], {
+  const result = spawnSync(process.execPath, ['--test', path.join(root, 'tests/zakko/sessionLifecycle.node.mjs')], {
     stdio: 'inherit', env: { ...process.env, ZAKKO_LIFECYCLE_MODULES: temporary },
   });
   if (result.error) throw result.error;
