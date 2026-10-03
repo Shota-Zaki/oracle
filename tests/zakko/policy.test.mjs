@@ -22,6 +22,10 @@ async function fixture(t) {
   return root;
 }
 const tick = () => new Promise((resolve) => setImmediate(resolve));
+async function directoryLink(target, link) {
+  await fs.symlink(target, link, process.platform === 'win32' ? 'junction' : 'dir');
+  assert.equal((await fs.lstat(link)).isSymbolicLink(), true);
+}
 
 test('literal loopback accepted without DNS', () => {
   for (const host of ['127.0.0.1', '127.2.3.4', '::1', '[::1]']) assert.ok(requireLoopback(host));
@@ -55,9 +59,11 @@ test('nested cookie/config diagnostics redacted without mutation', () => {
 test('sensitive file names and directories are rejected', () => {
   for (const file of ['.env', '.env.production', 'id_ed25519', 'x/private.pem', 'x/Cookies', '.ssh/config', '.oracle/sessions/x/meta.json', 'credentials.json']) assert.throws(() => requireContainedFile(file, '/repo'), /ORA_SECRET_FILE/);
 });
-test('prefix collision and traversal do not escape allowed root', () => {
-  for (const file of ['../x.ts', '/repo2/x.ts', '/repo', '/outside/x.ts']) assert.throws(() => requireContainedFile(file, '/repo'), /ORA_FILE_OUTSIDE_ROOT/);
-  assert.equal(requireContainedFile('src/a.ts', '/repo'), '/repo/src/a.ts');
+test('prefix collision and traversal do not escape allowed root', async (t) => {
+  const workspace = await fixture(t);
+  const root = path.join(workspace, 'repo');
+  for (const file of ['../x.ts', path.join(workspace, 'repo2', 'x.ts'), root, path.join(workspace, 'outside', 'x.ts')]) assert.throws(() => requireContainedFile(file, root), /ORA_FILE_OUTSIDE_ROOT/);
+  assert.equal(requireContainedFile(path.join('src', 'a.ts'), root), path.join(root, 'src', 'a.ts'));
 });
 test('runtime-generated secret candidates detected without disclosing values', () => {
   const candidates = ['sk-' + 'Q'.repeat(40), '-----BEGIN ' + 'PRIVATE KEY-----', 'Cookie: name=' + 'V'.repeat(24), 'postgres://user:' + 'V'.repeat(24) + '@host/db', 'api_key=' + 'V'.repeat(24)];
@@ -68,11 +74,23 @@ test('admitted file reads bounded safe text', async (t) => {
   const root = await fixture(t); await fs.writeFile(path.join(root, 'a.ts'), 'export const answer = 42;');
   assert.equal(await readAdmittedFile('a.ts', root), 'export const answer = 42;');
 });
-test('symlink files, directory symlinks and hard links fail closed', async (t) => {
+test('file symlinks fail closed (requires file-symlink fixture privilege)', async (t) => {
   const root = await fixture(t); await fs.mkdir(path.join(root, 'real')); await fs.writeFile(path.join(root, 'real/a.ts'), 'hello');
-  await fs.symlink('real/a.ts', path.join(root, 'link.ts')); await fs.symlink('real', path.join(root, 'linked'));
+  await fs.symlink('real/a.ts', path.join(root, 'link.ts'));
   await assert.rejects(readAdmittedFile('link.ts', root), /ORA_FILE_SYMLINK/);
+});
+
+test('directory links fail closed for internal and external task-owned content', async (t) => {
+  const root = await fixture(t); await fs.mkdir(path.join(root, 'real')); await fs.writeFile(path.join(root, 'real/a.ts'), 'hello');
+  const external = await fixture(t); await fs.writeFile(path.join(external, 'a.ts'), 'external fixture content');
+  await directoryLink(path.join(root, 'real'), path.join(root, 'linked'));
+  await directoryLink(external, path.join(root, 'outside'));
   await assert.rejects(readAdmittedFile('linked/a.ts', root), /ORA_FILE_SYMLINK/);
+  await assert.rejects(readAdmittedFile('outside/a.ts', root), /ORA_FILE_SYMLINK/);
+});
+
+test('hard links fail closed independently of file-symlink fixture privilege', async (t) => {
+  const root = await fixture(t); await fs.mkdir(path.join(root, 'real')); await fs.writeFile(path.join(root, 'real/a.ts'), 'hello');
   await fs.link(path.join(root, 'real/a.ts'), path.join(root, 'hard.ts'));
   await assert.rejects(readAdmittedFile('hard.ts', root), /ORA_FILE_SIZE_OR_TYPE/);
 });
@@ -89,9 +107,10 @@ test('private storage mode and atomic cleanup', async (t) => {
   if (process.platform !== 'win32') { assert.equal((await fs.stat(directory)).mode & 0o777, 0o700); assert.equal((await fs.stat(file)).mode & 0o777, 0o600); }
   assert.deepEqual(await fs.readdir(directory), ['record.json']);
 });
-test('storage refuses symlink directories and public files', async (t) => {
-  const root = await fixture(t); await fs.mkdir(path.join(root, 'real')); await fs.symlink('real', path.join(root, 'linked'));
-  await assert.rejects(ensurePrivateDirectory(path.join(root, 'linked')));
+test('storage refuses directory links and public files', async (t) => {
+  const root = await fixture(t); await fs.mkdir(path.join(root, 'real'));
+  await directoryLink(path.join(root, 'real'), path.join(root, 'linked'));
+  await assert.rejects(ensurePrivateDirectory(path.join(root, 'linked')), /ORA_STORAGE_PATH/);
   const file = path.join(root, 'public.json'); await fs.writeFile(file, '{}'); await fs.chmod(file, 0o644);
   if (process.platform !== 'win32') await assert.rejects(requirePrivateFile(file), /ORA_STORAGE_FILE/);
 });
@@ -178,13 +197,16 @@ test('token input rejects symlink, hardlink, oversized and whitespace', async (t
   await assert.rejects(resolveServiceToken(undefined, path.join(root, 'huge')), /ORA_TOKEN_FILE/);
   await assert.rejects(resolveServiceToken('t'.repeat(40) + ' '), /ORA_TOKEN_REQUIRED/);
 });
-test('capacity report skips external symlinks and enforces traversal budget', async (t) => {
+test('capacity report skips external directory links and enforces traversal budget', async (t) => {
   const root = await fixture(t);
+  const external = await fixture(t);
+  await fs.writeFile(path.join(external, 'not-counted'), 'x'.repeat(256));
   await fs.mkdir(path.join(root, 'data'));
   await fs.writeFile(path.join(root, 'data', 'log'), 'hello');
-  await fs.symlink('/etc', path.join(root, 'outside'));
+  await directoryLink(external, path.join(root, 'outside'));
   assert.deepEqual(await measureDirectory(root), { bytes: 5, entries: 3 });
   await assert.rejects(measureDirectory(root, 1), /ORA_STORAGE_SCAN_LIMIT/);
+  await assert.rejects(measureDirectory(path.join(root, 'outside')), /ORA_STORAGE_PATH/);
 });
 test('retention never makes unfinished, pinned, malformed or future records deletion candidates', () => {
   const now = Date.parse('2026-09-24T00:00:00Z');
