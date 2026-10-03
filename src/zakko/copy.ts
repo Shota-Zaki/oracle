@@ -1,4 +1,9 @@
 /** Japanese presentation only. Never use these values for DOM/protocol matching. */
+export const jaCliErrors = {
+  operationFailed: (code: string): string => `操作に失敗しました（${code}）。`,
+  unexpected: "予期しないエラーが発生しました。詳細を確認するには --verbose を付けて再試行してください。",
+};
+
 export const jaBrowserReattachGuidance = {
   introduction: "この実行は正常に応答を返しませんでしたが、まだ実行中の可能性があります。再接続:",
   render: "完了後の最終Markdownを表示",

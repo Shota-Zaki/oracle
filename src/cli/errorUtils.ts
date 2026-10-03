@@ -1,11 +1,13 @@
+import { jaCliErrors } from "../zakko/copy.js";
+
 const LOGGED_SYMBOL = Symbol("oracle.alreadyLogged");
 
 export function formatCliError(error: unknown): string {
   const message = error instanceof Error ? error.message : typeof error === "string" ? error : "";
   if (message.trim()) return message;
   const code = error && typeof error === "object" && "code" in error ? error.code : undefined;
-  if (typeof code === "string" && code.trim()) return `Operation failed (${code}).`;
-  return "An unexpected error occurred. Retry with --verbose for more details.";
+  if (typeof code === "string" && code.trim()) return jaCliErrors.operationFailed(code);
+  return jaCliErrors.unexpected;
 }
 
 export function markErrorLogged(error: unknown): void {

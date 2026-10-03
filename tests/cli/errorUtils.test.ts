@@ -21,14 +21,14 @@ describe("formatCliError", () => {
     "never renders a blank failure for %s",
     (error) => {
       expect(formatCliError(error)).toBe(
-        "An unexpected error occurred. Retry with --verbose for more details.",
+        "予期しないエラーが発生しました。詳細を確認するには --verbose を付けて再試行してください。",
       );
     },
   );
   test("preserves useful error messages and codes", () => {
     expect(formatCliError(new Error("missing conversation"))).toBe("missing conversation");
-    expect(formatCliError(Object.assign(new Error(), { code: "ECONNREFUSED" }))).toContain(
-      "ECONNREFUSED",
+    expect(formatCliError(Object.assign(new Error(), { code: "ECONNREFUSED" }))).toBe(
+      "操作に失敗しました（ECONNREFUSED）。",
     );
   });
 });
