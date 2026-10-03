@@ -1465,7 +1465,9 @@ describe("performSessionRun", () => {
     const logLines = log.mock.calls.map((c) => String(c[0])).join("\n");
     expect(logLines).not.toContain("Next steps (browser fallback)");
     expect(logLines).not.toContain("--engine api");
-    expect(logLines).not.toContain("This run did not return cleanly");
+    expect(logLines).not.toContain(
+      "この実行は正常に応答を返しませんでしたが、まだ実行中の可能性があります。再接続:",
+    );
   });
 
   test("records browser cancellation truthfully for the session and model", async () => {
@@ -2493,7 +2495,7 @@ describe("performSessionRun", () => {
       const logLines = log.mock.calls.map((c) => String(c[0])).join("\n");
       expect(logLines).toContain("Auto-reattach stopped");
       expect(logLines).toContain(
-        "This run did not return cleanly, but it may still be alive. Reattach:",
+        "この実行は正常に応答を返しませんでしたが、まだ実行中の可能性があります。再接続:",
       );
       expect(logLines).toContain("oracle session sess-1 --render");
       expect(logLines).toContain("oracle session sess-1 --live");

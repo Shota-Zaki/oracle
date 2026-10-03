@@ -30,3 +30,5 @@ At fixed source4f69a8dd9ed59f58ed42d73094d8681cfd5234a7, existing dependency-fre
 ## ORA-005 lifecycle checkpoint - 2026-10-03
 
 WU-04 lifecycle formatter copy is localized; real formatter runtime tests passed 7/7 on Windows Node24.19.0. Existing policy tests are 25/30 with the same five Windows path/symlink failures reproduced at the unmodified base. Full pinned toolchain gates remain unexecuted. ORA-005 remains In Progress; remaining CLI/TUI/status/setup/error copy is not accepted as complete. Evidence: docs/zakko/VALIDATION_LIFECYCLE_COPY_2026-10-03.md.
+
+WU-04 recovery guidance follow-on: browser reattach introduction and render/live/harvest explanations use Japanese copy. Command prefixes and runner guards are preserved. Dependency-free lifecycle/recovery checks pass 9/9; policy tests retain the baseline 25/30 Windows limitations. Vitest runner integration and full pinned gates are unexecuted. ORA-005 stays In Progress. Evidence: docs/zakko/VALIDATION_REATTACH_COPY_2026-10-03.md.

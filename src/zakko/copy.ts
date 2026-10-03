@@ -1,4 +1,11 @@
 /** Japanese presentation only. Never use these values for DOM/protocol matching. */
+export const jaBrowserReattachGuidance = {
+  introduction: "この実行は正常に応答を返しませんでしたが、まだ実行中の可能性があります。再接続:",
+  render: "完了後の最終Markdownを表示",
+  live: "完了まで出力を追跡",
+  harvest: "現在の回答のスナップショットを取得",
+};
+
 export const jaSessionLifecycle = {
   session: "セッション",
   mode: "モード",

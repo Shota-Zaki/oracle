@@ -6,14 +6,14 @@ describe("formatBrowserReattachGuidance", () => {
     const message = formatBrowserReattachGuidance("gpt55-pro-plan-review");
 
     expect(message).toContain(
-      "This run did not return cleanly, but it may still be alive. Reattach:",
+      "この実行は正常に応答を返しませんでしたが、まだ実行中の可能性があります。再接続:",
     );
     expect(message).toContain(
-      "oracle session gpt55-pro-plan-review --render    # final markdown when complete",
+      "oracle session gpt55-pro-plan-review --render    # 完了後の最終Markdownを表示",
     );
-    expect(message).toContain("oracle session gpt55-pro-plan-review --live      # tail until done");
+    expect(message).toContain("oracle session gpt55-pro-plan-review --live      # 完了まで出力を追跡");
     expect(message).toContain(
-      "oracle session gpt55-pro-plan-review --harvest   # snapshot the current answer now",
+      "oracle session gpt55-pro-plan-review --harvest   # 現在の回答のスナップショットを取得",
     );
   });
 });
