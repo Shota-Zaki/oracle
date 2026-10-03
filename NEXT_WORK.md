@@ -23,3 +23,7 @@ user-facing / protocol / DOM / test固定文字列を分類し、残るCLI/TUI/s
 ## WU-01 checkpoint - 2026-10-02
 
 Dependency-free source/runtime checks passed on plain Node24.21.0 at4f69a8dd. See docs/zakko/VALIDATION_NATIVE_NODE24_2026-10-02.md. Node24 is available; remaining full-gate prerequisite is exact pnpm11.27.0/locked dependencies (no install authorized). Acquire approved dependency environment before typecheck/lint/format/Vitest/build/packed/MCP. Do not rerun provider/live tests or use shared browser profiles as a substitute.
+
+## WU-04 lifecycle checkpoint - 2026-10-03
+
+Session lifecycle block copy is localized with a dependency-free real-formatter runner: `node scripts/test-session-lifecycle.mjs` (7/7). Continue the remaining copy audit, including sessionDisplay and reattachGuidance, as separate bounded work. Preserve command bytes and compact execution labels. Full pinned toolchain validation is still required; Windows policy-suite baseline limitations are recorded in docs/zakko/VALIDATION_LIFECYCLE_COPY_2026-10-03.md. ORA-005 remains In Progress.

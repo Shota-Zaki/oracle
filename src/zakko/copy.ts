@@ -1,4 +1,20 @@
 /** Japanese presentation only. Never use these values for DOM/protocol matching. */
+export const jaSessionLifecycle = {
+  session: "セッション",
+  mode: "モード",
+  models: "モデル",
+  detach: "切り離し",
+  reattach: "再接続",
+  execution: {
+    foreground: "フォアグラウンド",
+    background: "バックグラウンド",
+  },
+  detachedPolling: "はい（ポーリング中）",
+  detached: "はい",
+  attached: "いいえ",
+  modelCount: (count: number): string => count > 1 ? `${count}（並列）` : String(count || 1),
+};
+
 export const jaTitles: Record<string, string> = {
   "Usage:": "使い方:", "Options:": "オプション:", "Commands:": "コマンド:", "Arguments:": "引数:",
 };

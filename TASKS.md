@@ -26,3 +26,7 @@
 ## ORA-009 verification checkpoint - 2026-10-02
 
 At fixed source4f69a8dd9ed59f58ed42d73094d8681cfd5234a7, existing dependency-free tests passed30/30 with plain Node24.21.0 and8 entry syntax transforms. Full dependency/typecheck/lint/Vitest/build/packed/MCP gate remains unexecuted; ORA-009 stays Ready, no full AC accepted. Exact toolchain prerequisite and limits: docs/zakko/VALIDATION_NATIVE_NODE24_2026-10-02.md.
+
+## ORA-005 lifecycle checkpoint - 2026-10-03
+
+WU-04 lifecycle formatter copy is localized; real formatter runtime tests passed 7/7 on Windows Node24.19.0. Existing policy tests are 25/30 with the same five Windows path/symlink failures reproduced at the unmodified base. Full pinned toolchain gates remain unexecuted. ORA-005 remains In Progress; remaining CLI/TUI/status/setup/error copy is not accepted as complete. Evidence: docs/zakko/VALIDATION_LIFECYCLE_COPY_2026-10-03.md.

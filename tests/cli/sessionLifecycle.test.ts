@@ -29,11 +29,11 @@ describe("session lifecycle formatting", () => {
     } as SessionMetadata;
 
     expect(formatSessionLifecycleBlock(meta)).toEqual([
-      "Session: sess-123",
-      "Mode: api background",
-      "Models: 2 parallel",
-      "Detach: yes, polling",
-      "Reattach: oracle session sess-123",
+      "セッション: sess-123",
+      "モード: api バックグラウンド",
+      "モデル: 2（並列）",
+      "切り離し: はい（ポーリング中）",
+      "再接続: oracle session sess-123",
     ]);
     expect(formatSessionExecutionLabel(meta)).toBe("api/bg");
     expect(lifecycle.workerPid).toBe(1234);
@@ -55,8 +55,13 @@ describe("session lifecycle formatting", () => {
       lifecycle,
     } as SessionMetadata;
 
-    expect(formatSessionLifecycleBlock(meta)).toContain("Mode: browser foreground");
-    expect(formatSessionLifecycleBlock(meta)).toContain("Detach: no");
+    expect(formatSessionLifecycleBlock(meta)).toEqual([
+      "セッション: browser-1",
+      "モード: browser フォアグラウンド",
+      "モデル: 1",
+      "切り離し: いいえ",
+      "再接続: oracle session browser-1",
+    ]);
     expect(formatSessionExecutionLabel(meta)).toBe("br/fg");
   });
 

@@ -1,4 +1,5 @@
 import type { SessionLifecycleMetadata, SessionMetadata } from "../sessionManager.js";
+import { jaSessionLifecycle } from "../zakko/copy.js";
 import type { EngineMode } from "./engine.js";
 
 export interface BuildSessionLifecycleOptions {
@@ -32,15 +33,15 @@ export function formatSessionLifecycleBlock(meta: SessionMetadata): string[] {
   const modelCount = meta.models?.length ?? (meta.model ? 1 : 0);
   const detachValue = lifecycle.detached
     ? lifecycle.execution === "background"
-      ? "yes, polling"
-      : "yes"
-    : "no";
+      ? jaSessionLifecycle.detachedPolling
+      : jaSessionLifecycle.detached
+    : jaSessionLifecycle.attached;
   const lines = [
-    `Session: ${meta.id}`,
-    `Mode: ${lifecycle.engine} ${lifecycle.execution}`,
-    `Models: ${modelCount > 1 ? `${modelCount} parallel` : String(modelCount || 1)}`,
-    `Detach: ${detachValue}`,
-    `Reattach: ${lifecycle.reattachCommand}`,
+    `${jaSessionLifecycle.session}: ${meta.id}`,
+    `${jaSessionLifecycle.mode}: ${lifecycle.engine} ${jaSessionLifecycle.execution[lifecycle.execution]}`,
+    `${jaSessionLifecycle.models}: ${jaSessionLifecycle.modelCount(modelCount)}`,
+    `${jaSessionLifecycle.detach}: ${detachValue}`,
+    `${jaSessionLifecycle.reattach}: ${lifecycle.reattachCommand}`,
   ];
   return lines;
 }

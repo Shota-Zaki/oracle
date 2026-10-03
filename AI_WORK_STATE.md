@@ -15,3 +15,7 @@ Repository: Shota-Zaki/oracle。branch: work。開始HEAD: 74fe3ac8f896dfac17e7b
 ## Native verification checkpoint - 2026-10-02
 
 At canonical work4f69a8dd9ed59f58ed42d73094d8681cfd5234a7, isolated plain Node24.21.0 execution of scripts/test-zakko.mjs passed30/30,0 skipped;8 entry transforms passed. The older Node22/no-local-tree constraints above are historical. pnpm11.27.0 and oracle dependencies remain unavailable; no installation attempted. Full toolchain/provider/browser acceptance still pending. Evidence: docs/zakko/VALIDATION_NATIVE_NODE24_2026-10-02.md. No task completion or service/publication implied.
+
+## WU-04 lifecycle display checkpoint - 2026-10-03
+
+Isolated Windows work started at f386d313230ecf77b64aff2021554cd3e45396f4. The CLI lifecycle block now uses Japanese copy; its seven dependency-free real-formatter tests pass on Node24.19.0. Metadata, IDs, reattach bytes and compact execution labels are preserved. Five existing policy-test failures are reproduced at the base and reflect Windows path/symlink limits; full pinned pnpm/dependency gates are unexecuted. No install or service/provider operation occurred. ORA-005 is In Progress. See docs/zakko/VALIDATION_LIFECYCLE_COPY_2026-10-03.md; further copy localization remains bounded follow-on work.
