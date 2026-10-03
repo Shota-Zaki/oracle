@@ -1,4 +1,4 @@
-// Execute actual CLI lifecycle, recovery and error copy with Node24; separate from full gates.
+// Execute actual CLI copy and validation diagnostics with Node24; separate from full gates.
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -13,6 +13,7 @@ try {
   for (const file of [
     'src/zakko/copy.ts', 'src/cli/sessionLifecycle.ts', 'src/cli/reattachGuidance.ts',
     'src/cli/errorUtils.ts',
+    'src/cli/stdin.ts', 'src/cli/docsCheck.ts',
   ]) {
     const target = path.join(temporary, file.replace(/\.ts$/, '.js'));
     await fs.mkdir(path.dirname(target), { recursive: true });
@@ -24,6 +25,7 @@ try {
     path.join(root, 'tests/zakko/sessionLifecycle.node.mjs'),
     path.join(root, 'tests/zakko/reattachGuidance.node.mjs'),
     path.join(root, 'tests/zakko/errorUtils.node.mjs'),
+    path.join(root, 'tests/zakko/validationCopy.node.mjs'),
   ], {
     stdio: 'inherit', env: { ...process.env, ZAKKO_LIFECYCLE_MODULES: temporary },
   });

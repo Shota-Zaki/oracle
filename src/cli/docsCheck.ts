@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { Command } from "commander";
+import { jaCliValidation } from "../zakko/copy.js";
 
 export interface DocsCheckIssue {
   file: string;
@@ -68,18 +69,14 @@ export async function checkDocsFlags({
 
 export function printDocsCheckResult(result: DocsCheckResult, log = console.log): void {
   if (result.issues.length === 0) {
-    log(
-      `Docs/help check: ok (${result.checkedFlags.length} flags, ${result.checkedFiles.length} files)`,
-    );
+    log(jaCliValidation.docsSuccess(result.checkedFlags.length, result.checkedFiles.length));
     return;
   }
-  log("Docs/help drift:");
+  log(jaCliValidation.docsDrift);
   for (const issue of result.issues) {
     const scopes = [issue.section, issue.command].filter(Boolean);
     const scope = scopes.length > 0 ? ` (${scopes.join(", ")})` : "";
-    log(
-      `- ${issue.file}${scope} mentions ${issue.flag}, but CLI help does not expose ${issue.flag}`,
-    );
+    log(jaCliValidation.docsIssue(issue.file, scope, issue.flag));
   }
 }
 
@@ -223,12 +220,12 @@ async function resolveDocPaths(cwd: string, paths?: string[]): Promise<string[]>
       }
     } catch {
       if (paths && paths.length > 0) {
-        throw new Error(`Docs check path not found: ${candidate}`);
+        throw new Error(jaCliValidation.docsPathMissing(candidate));
       }
     }
   }
   if (existing.length === 0) {
-    throw new Error("No docs found to check. Run from the repo root or pass --docs-path <file>.");
+    throw new Error(jaCliValidation.docsMissing);
   }
   return existing;
 }

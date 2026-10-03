@@ -1,3 +1,5 @@
+import { jaCliValidation } from "../zakko/copy.js";
+
 export async function readStdin(stream: NodeJS.ReadableStream = process.stdin): Promise<string> {
   const chunks: string[] = [];
   const maybeTextStream = stream as { setEncoding?: (encoding: BufferEncoding) => void };
@@ -16,11 +18,11 @@ export async function resolveDashPrompt(
     return prompt;
   }
   if ((stream as NodeJS.ReadStream).isTTY) {
-    throw new Error(`"-p -" requires piped input, for example: echo "prompt" | oracle -p -.`);
+    throw new Error(jaCliValidation.stdinRequiresPipe);
   }
   const stdinPrompt = (await readStdin(stream)).trim();
   if (!stdinPrompt) {
-    throw new Error(`"-p -" received empty stdin.`);
+    throw new Error(jaCliValidation.stdinEmpty);
   }
   return stdinPrompt;
 }

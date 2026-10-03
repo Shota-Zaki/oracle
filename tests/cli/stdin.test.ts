@@ -23,12 +23,14 @@ describe("stdin helpers", () => {
   test("resolveDashPrompt rejects tty stdin", async () => {
     const stream = Readable.from([]);
     Object.assign(stream, { isTTY: true });
-    await expect(resolveDashPrompt("-", stream)).rejects.toThrow(/requires piped input/i);
+    await expect(resolveDashPrompt("-", stream)).rejects.toThrow(
+      '"-p -" にはパイプ経由の入力が必要です。例: echo "prompt" | oracle -p -.',
+    );
   });
 
   test("resolveDashPrompt rejects empty stdin", async () => {
     const stream = Readable.from([" \n "]);
     Object.assign(stream, { isTTY: false });
-    await expect(resolveDashPrompt("-", stream)).rejects.toThrow(/received empty stdin/i);
+    await expect(resolveDashPrompt("-", stream)).rejects.toThrow('"-p -" の標準入力が空です。');
   });
 });

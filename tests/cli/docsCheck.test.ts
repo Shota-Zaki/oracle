@@ -120,7 +120,7 @@ describe("docs check", () => {
         ),
       ).rejects.toMatchObject({
         code: 1,
-        stderr: expect.stringContaining(`Docs check path not found: ${missing}`),
+        stderr: expect.stringContaining(`ドキュメント検証のパスが見つかりません: ${missing}`),
       });
 
       await rm(tmp, { recursive: true, force: true });

@@ -1,4 +1,16 @@
 /** Japanese presentation only. Never use these values for DOM/protocol matching. */
+export const jaCliValidation = {
+  stdinRequiresPipe: '"-p -" にはパイプ経由の入力が必要です。例: echo "prompt" | oracle -p -.',
+  stdinEmpty: '"-p -" の標準入力が空です。',
+  docsSuccess: (flags: number, files: number): string =>
+    `ドキュメント・ヘルプ検証: 問題なし（フラグ ${flags} 件、ファイル ${files} 件）`,
+  docsDrift: "ドキュメント・ヘルプの不一致:",
+  docsIssue: (file: string, scope: string, flag: string): string =>
+    `- ${file}${scope} に ${flag} の記載がありますが、CLI ヘルプには ${flag} がありません`,
+  docsPathMissing: (file: string): string => `ドキュメント検証のパスが見つかりません: ${file}`,
+  docsMissing: "検証対象のドキュメントがありません。リポジトリのルートから実行するか、--docs-path <file> を指定してください。",
+};
+
 export const jaCliErrors = {
   operationFailed: (code: string): string => `操作に失敗しました（${code}）。`,
   unexpected: "予期しないエラーが発生しました。詳細を確認するには --verbose を付けて再試行してください。",
